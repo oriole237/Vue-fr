@@ -19,20 +19,20 @@
 
 			<section class="menu">
 				<h2>Menu</h2>
-				<div class="menu-item">
+				<div class="menu-item" v-for="eachMenu in simpleMenu">
 					<img
 						class="menu-item__image"
-						src="https://via.placeholder.com/300x150"
-						alt=""
+						:bind="eachMenu.image.source"
+						:bind="eachMenu.image.alt"
 					/>
 					<div>
 						<h3>Nom de l'article</h3>
-						<p>En stock</p>
-						<p>En rupture de stock</p>
+						<p v-if="eachMenu.inStock">En stock</p>
+						<p v-else>En rupture de stock</p>
 						<div>
 							<label for="add-item-quantity">Quantité :</label>
-							<input id="add-item-quantity" type="number" />
-							<button>Ajouter au panier d'achat</button>
+							<input id="add-item-quantity" type="number" v-model="eachMenu.quantity" />
+							<button @click="addToShoppingCart(eachMenu.quantity)">Ajouter au panier d'achat</button>
 						</div>
 					</div>
 				</div>
@@ -102,6 +102,11 @@
 						const currentYear = new Date().getFullYear()
 
 						return `Copyright ${this.restaurantName} ${currentYear}`
+					}
+				}, 
+				methods : {
+					addToShoppingCart(quantity){
+						return quantity +1;
 					}
 				}
 			})
