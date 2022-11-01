@@ -19,19 +19,19 @@
 
 			<section class="menu">
 				<h2>Menu</h2>
-				<div class="menu-item" v-for="eachMenu in simpleMenu">
+				<div class="menu-item" v-for="eachMenu in simpleMenu" :key="eachMenu.name">
 					<img
 						class="menu-item__image"
-						:bind="eachMenu.image.source"
-						:bind="eachMenu.image.alt"
+						:src="eachMenu.image.source"
+						:alt="eachMenu.image.alt"
 					/>
 					<div>
 						<h3>Nom de l'article</h3>
 						<p v-if="eachMenu.inStock">En stock</p>
 						<p v-else>En rupture de stock</p>
 						<div>
-							<label for="add-item-quantity">Quantité :</label>
-							<input id="add-item-quantity" type="number" v-model="eachMenu.quantity" />
+							<label for="add-item-quantity">Quantité : {{ eachMenu.quantity }} </label>
+							<input id="add-item-quantity" type="number" v-model.number="eachMenu.quantity" />
 							<button @click="addToShoppingCart(eachMenu.quantity)">Ajouter au panier d'achat</button>
 						</div>
 					</div>
@@ -67,6 +67,7 @@
 					email: "hello@cafewithavue.bakery",
 					phone: "01 88 88 88 88",
 					restaurantName: "La belle vue",
+					shoppingCart: 0,
 					simpleMenu: [
 						{
 							name: "Croissant",
@@ -106,7 +107,7 @@
 				}, 
 				methods : {
 					addToShoppingCart(quantity){
-						return quantity +1;
+						this.shoppingCart + quantity ;
 					}
 				}
 			})
